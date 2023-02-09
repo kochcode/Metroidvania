@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DA91C74529952D73005C6DA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C74429952D73005C6DA2 /* AppDelegate.swift */; };
+		DA91C74729952D73005C6DA2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DA91C74629952D73005C6DA2 /* GameScene.sks */; };
+		DA91C74929952D73005C6DA2 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = DA91C74829952D73005C6DA2 /* Actions.sks */; };
+		DA91C74B29952D73005C6DA2 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C74A29952D73005C6DA2 /* GameScene.swift */; };
+		DA91C74D29952D73005C6DA2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C74C29952D73005C6DA2 /* GameViewController.swift */; };
+		DA91C75029952D73005C6DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA91C74E29952D73005C6DA2 /* Main.storyboard */; };
+		DA91C75229952D75005C6DA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA91C75129952D75005C6DA2 /* Assets.xcassets */; };
+		DA91C75529952D75005C6DA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA91C75329952D75005C6DA2 /* LaunchScreen.storyboard */; };
+		DA91C75F29952D75005C6DA2 /* MetroidvaniaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C75E29952D75005C6DA2 /* MetroidvaniaTests.swift */; };
+		DA91C76929952D75005C6DA2 /* MetroidvaniaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C76829952D75005C6DA2 /* MetroidvaniaUITests.swift */; };
+		DA91C76B29952D75005C6DA2 /* MetroidvaniaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA91C76A29952D75005C6DA2 /* MetroidvaniaUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DA91C75B29952D75005C6DA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA91C73929952D73005C6DA2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA91C74029952D73005C6DA2;
+			remoteInfo = Metroidvania;
+		};
+		DA91C76529952D75005C6DA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA91C73929952D73005C6DA2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA91C74029952D73005C6DA2;
+			remoteInfo = Metroidvania;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DA91C74129952D73005C6DA2 /* Metroidvania.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metroidvania.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA91C74429952D73005C6DA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA91C74629952D73005C6DA2 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		DA91C74829952D73005C6DA2 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		DA91C74A29952D73005C6DA2 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		DA91C74C29952D73005C6DA2 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		DA91C74F29952D73005C6DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DA91C75129952D75005C6DA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA91C75429952D75005C6DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DA91C75A29952D75005C6DA2 /* MetroidvaniaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroidvaniaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA91C75E29952D75005C6DA2 /* MetroidvaniaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroidvaniaTests.swift; sourceTree = "<group>"; };
+		DA91C76429952D75005C6DA2 /* MetroidvaniaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetroidvaniaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA91C76829952D75005C6DA2 /* MetroidvaniaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroidvaniaUITests.swift; sourceTree = "<group>"; };
+		DA91C76A29952D75005C6DA2 /* MetroidvaniaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroidvaniaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA91C73E29952D73005C6DA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C75729952D75005C6DA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C76129952D75005C6DA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DA91C73829952D73005C6DA2 = {
+			isa = PBXGroup;
+			children = (
+				DA91C74329952D73005C6DA2 /* Metroidvania */,
+				DA91C75D29952D75005C6DA2 /* MetroidvaniaTests */,
+				DA91C76729952D75005C6DA2 /* MetroidvaniaUITests */,
+				DA91C74229952D73005C6DA2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA91C74229952D73005C6DA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA91C74129952D73005C6DA2 /* Metroidvania.app */,
+				DA91C75A29952D75005C6DA2 /* MetroidvaniaTests.xctest */,
+				DA91C76429952D75005C6DA2 /* MetroidvaniaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA91C74329952D73005C6DA2 /* Metroidvania */ = {
+			isa = PBXGroup;
+			children = (
+				DA91C74429952D73005C6DA2 /* AppDelegate.swift */,
+				DA91C74629952D73005C6DA2 /* GameScene.sks */,
+				DA91C74829952D73005C6DA2 /* Actions.sks */,
+				DA91C74A29952D73005C6DA2 /* GameScene.swift */,
+				DA91C74C29952D73005C6DA2 /* GameViewController.swift */,
+				DA91C74E29952D73005C6DA2 /* Main.storyboard */,
+				DA91C75129952D75005C6DA2 /* Assets.xcassets */,
+				DA91C75329952D75005C6DA2 /* LaunchScreen.storyboard */,
+			);
+			path = Metroidvania;
+			sourceTree = "<group>";
+		};
+		DA91C75D29952D75005C6DA2 /* MetroidvaniaTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA91C75E29952D75005C6DA2 /* MetroidvaniaTests.swift */,
+			);
+			path = MetroidvaniaTests;
+			sourceTree = "<group>";
+		};
+		DA91C76729952D75005C6DA2 /* MetroidvaniaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DA91C76829952D75005C6DA2 /* MetroidvaniaUITests.swift */,
+				DA91C76A29952D75005C6DA2 /* MetroidvaniaUITestsLaunchTests.swift */,
+			);
+			path = MetroidvaniaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DA91C74029952D73005C6DA2 /* Metroidvania */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA91C76E29952D75005C6DA2 /* Build configuration list for PBXNativeTarget "Metroidvania" */;
+			buildPhases = (
+				DA91C73D29952D73005C6DA2 /* Sources */,
+				DA91C73E29952D73005C6DA2 /* Frameworks */,
+				DA91C73F29952D73005C6DA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Metroidvania;
+			productName = Metroidvania;
+			productReference = DA91C74129952D73005C6DA2 /* Metroidvania.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DA91C75929952D75005C6DA2 /* MetroidvaniaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA91C77129952D75005C6DA2 /* Build configuration list for PBXNativeTarget "MetroidvaniaTests" */;
+			buildPhases = (
+				DA91C75629952D75005C6DA2 /* Sources */,
+				DA91C75729952D75005C6DA2 /* Frameworks */,
+				DA91C75829952D75005C6DA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA91C75C29952D75005C6DA2 /* PBXTargetDependency */,
+			);
+			name = MetroidvaniaTests;
+			productName = MetroidvaniaTests;
+			productReference = DA91C75A29952D75005C6DA2 /* MetroidvaniaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DA91C76329952D75005C6DA2 /* MetroidvaniaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA91C77429952D75005C6DA2 /* Build configuration list for PBXNativeTarget "MetroidvaniaUITests" */;
+			buildPhases = (
+				DA91C76029952D75005C6DA2 /* Sources */,
+				DA91C76129952D75005C6DA2 /* Frameworks */,
+				DA91C76229952D75005C6DA2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA91C76629952D75005C6DA2 /* PBXTargetDependency */,
+			);
+			name = MetroidvaniaUITests;
+			productName = MetroidvaniaUITests;
+			productReference = DA91C76429952D75005C6DA2 /* MetroidvaniaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DA91C73929952D73005C6DA2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					DA91C74029952D73005C6DA2 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					DA91C75929952D75005C6DA2 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DA91C74029952D73005C6DA2;
+					};
+					DA91C76329952D75005C6DA2 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DA91C74029952D73005C6DA2;
+					};
+				};
+			};
+			buildConfigurationList = DA91C73C29952D73005C6DA2 /* Build configuration list for PBXProject "Metroidvania" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DA91C73829952D73005C6DA2;
+			productRefGroup = DA91C74229952D73005C6DA2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DA91C74029952D73005C6DA2 /* Metroidvania */,
+				DA91C75929952D75005C6DA2 /* MetroidvaniaTests */,
+				DA91C76329952D75005C6DA2 /* MetroidvaniaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DA91C73F29952D73005C6DA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA91C75029952D73005C6DA2 /* Main.storyboard in Resources */,
+				DA91C74729952D73005C6DA2 /* GameScene.sks in Resources */,
+				DA91C75229952D75005C6DA2 /* Assets.xcassets in Resources */,
+				DA91C75529952D75005C6DA2 /* LaunchScreen.storyboard in Resources */,
+				DA91C74929952D73005C6DA2 /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C75829952D75005C6DA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C76229952D75005C6DA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DA91C73D29952D73005C6DA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA91C74B29952D73005C6DA2 /* GameScene.swift in Sources */,
+				DA91C74D29952D73005C6DA2 /* GameViewController.swift in Sources */,
+				DA91C74529952D73005C6DA2 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C75629952D75005C6DA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA91C75F29952D75005C6DA2 /* MetroidvaniaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA91C76029952D75005C6DA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA91C76929952D75005C6DA2 /* MetroidvaniaUITests.swift in Sources */,
+				DA91C76B29952D75005C6DA2 /* MetroidvaniaUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DA91C75C29952D75005C6DA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA91C74029952D73005C6DA2 /* Metroidvania */;
+			targetProxy = DA91C75B29952D75005C6DA2 /* PBXContainerItemProxy */;
+		};
+		DA91C76629952D75005C6DA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA91C74029952D73005C6DA2 /* Metroidvania */;
+			targetProxy = DA91C76529952D75005C6DA2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DA91C74E29952D73005C6DA2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA91C74F29952D73005C6DA2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DA91C75329952D75005C6DA2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA91C75429952D75005C6DA2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DA91C76C29952D75005C6DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DA91C76D29952D75005C6DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DA91C76F29952D75005C6DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.Metroidvania;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DA91C77029952D75005C6DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.Metroidvania;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DA91C77229952D75005C6DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.MetroidvaniaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metroidvania.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Metroidvania";
+			};
+			name = Debug;
+		};
+		DA91C77329952D75005C6DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.MetroidvaniaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metroidvania.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Metroidvania";
+			};
+			name = Release;
+		};
+		DA91C77529952D75005C6DA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.MetroidvaniaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Metroidvania;
+			};
+			name = Debug;
+		};
+		DA91C77629952D75005C6DA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V5LQLSFPF6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = clc.MetroidvaniaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Metroidvania;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DA91C73C29952D73005C6DA2 /* Build configuration list for PBXProject "Metroidvania" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA91C76C29952D75005C6DA2 /* Debug */,
+				DA91C76D29952D75005C6DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA91C76E29952D75005C6DA2 /* Build configuration list for PBXNativeTarget "Metroidvania" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA91C76F29952D75005C6DA2 /* Debug */,
+				DA91C77029952D75005C6DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA91C77129952D75005C6DA2 /* Build configuration list for PBXNativeTarget "MetroidvaniaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA91C77229952D75005C6DA2 /* Debug */,
+				DA91C77329952D75005C6DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA91C77429952D75005C6DA2 /* Build configuration list for PBXNativeTarget "MetroidvaniaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA91C77529952D75005C6DA2 /* Debug */,
+				DA91C77629952D75005C6DA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DA91C73929952D73005C6DA2 /* Project object */;
+}
