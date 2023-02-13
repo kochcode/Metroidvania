@@ -42,7 +42,9 @@
                                     <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="rightButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="shK-cB-khY"/>
+                                    <action selector="rightMoveHeld:" destination="BV1-FR-VrT" eventType="touchDown" id="3sY-7Z-9m8"/>
+                                    <action selector="rightMoveHeld:" destination="BV1-FR-VrT" eventType="touchUpInside" id="8iN-EL-GVY"/>
+                                    <action selector="rightMoveLetGo:" destination="BV1-FR-VrT" eventType="touchUpInside" id="afq-lv-zTk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAh-4g-hYq">
@@ -54,9 +56,6 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large"/>
                                     <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                 </buttonConfiguration>
-                                <connections>
-                                    <action selector="downButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="sPO-d7-3uO"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngv-z4-IfF">
                                 <rect key="frame" x="720" y="289" width="70" height="70"/>

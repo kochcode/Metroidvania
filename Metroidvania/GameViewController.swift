@@ -41,14 +41,18 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func leftMoveHeld(_ sender: UIButton) {
+        play.mLeft()
     }
     @IBAction func leftMoveLetGo(_ sender: UIButton) {
+        play.stopLeft()
     }
-    
-    
-    @IBAction func rightButton(_ sender: UIButton) {
+    @IBAction func rightMoveHeld(_ sender: UIButton) {
         play.mRight()
     }
+    @IBAction func rightMoveLetGo(_ sender: UIButton) {
+        play.stopRight()
+    }
+    
     
     @IBAction func downButton(_ sender: UIButton) {
         play.mDown()

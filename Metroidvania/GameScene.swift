@@ -24,28 +24,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cam.position = explorer.position
     }
     func didBegin(_ contact: SKPhysicsContact) {
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
+            jumps = 1
+            print(jumps)
+        }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ground"{
             jumps = 1
             print(jumps)
         }
-    }
-    func mRight(){
-        if jumps > 0{
-            explorer.physicsBody?.velocity = CGVector(dx: 100.0, dy: 0)
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "plank"{
+            jumps = 1
+            print(jumps)
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "plank"{
+            jumps = 1
+            print(jumps)
         }
     }
     func mLeft(){
-        
-        explorer.position = CGPoint(x: -100.0, y: 0)
+        explorer.physicsBody?.velocity = CGVector(dx: -450, dy: 0)
+    }
+    func stopLeft(){
+        explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+    }
+    func mRight(){
+        explorer.physicsBody?.velocity = CGVector(dx: 450, dy: 0)
+    }
+    func stopRight(){
+        explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
     }
     func mDown(){
         if down == true{
-            explorer.physicsBody?.velocity = CGVector(dx: -50, dy: 0)
+            explorer.physicsBody?.velocity = CGVector(dx: -75, dy: 0)
         }
     }
     func jump(){
         if jumps > 0{
-            explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 500.0)
+            explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
             jumps -= 1
             print(jumps)
         }
