@@ -11,6 +11,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var explorer : SKSpriteNode!
+    var plank : SKSpriteNode!
     let cam = SKCameraNode()
     var jumps = 1
     var down = false
@@ -18,6 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         explorer = self.childNode(withName: "explorer") as! SKSpriteNode
+        plank = self.childNode(withName: "plank") as! SKSpriteNode
         self.camera = cam
     }
     override func update(_ currentTime: TimeInterval) {
@@ -35,6 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "plank"{
             jumps = 1
             print(jumps)
+            
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "plank"{
             jumps = 1
@@ -54,9 +57,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
     }
     func mDown(){
-        if down == true{
-            explorer.physicsBody?.velocity = CGVector(dx: -75, dy: 0)
-        }
+        down = true
+        plank.physicsBody?.categoryBitMask = 0
+        explorer.physicsBody?.velocity = CGVector(dx: 0, dy: -75)
+            
+    }
+    func stopDown(){
+        down = false
+        plank.physicsBody?.categoryBitMask = 1
+        explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
     }
     func jump(){
         if jumps > 0{

@@ -53,10 +53,13 @@ class GameViewController: UIViewController {
         play.stopRight()
     }
     
-    
-    @IBAction func downButton(_ sender: UIButton) {
+    @IBAction func downMoveHeld(_ sender: UIButton) {
         play.mDown()
     }
+    @IBAction func downMoveLetGo(_ sender: UIButton) {
+        play.stopDown()
+    }
+    
     
     @IBAction func jumpButton(_ sender: UIButton) {
         play.jump()
