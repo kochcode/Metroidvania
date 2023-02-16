@@ -60,6 +60,14 @@ class GameViewController: UIViewController {
         play.stopDown()
     }
     
+    @IBAction func upMoveHeld(_ sender: UIButton) {
+        play.mUp()
+        
+    }
+    @IBAction func upMoveLetGo(_ sender: UIButton) {
+        play.stopUp()
+    }
+    
     
     @IBAction func jumpButton(_ sender: UIButton) {
         play.jump()
