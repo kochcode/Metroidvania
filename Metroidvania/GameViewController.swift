@@ -10,6 +10,11 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    
+    @IBOutlet weak var heart1: UIImageView!
+    @IBOutlet weak var heart2: UIImageView!
+    @IBOutlet weak var heart3: UIImageView!
+    
     var play : GameScene!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +26,7 @@ class GameViewController: UIViewController {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 play = scene as? GameScene
+                play.gs = self
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -31,11 +37,10 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
     }
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeRight
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -72,5 +77,26 @@ class GameViewController: UIViewController {
     @IBAction func jumpButton(_ sender: UIButton) {
         play.jump()
     }
-    
+    func update(){
+        if GameScene.lives == 3{
+            heart1.isHidden = false
+            heart2.isHidden = false
+            heart3.isHidden = false
+        }
+        if GameScene.lives == 2{
+            heart1.isHidden = false
+            heart2.isHidden = false
+            heart3.isHidden = true
+        }
+        if GameScene.lives == 1{
+            heart1.isHidden = false
+            heart2.isHidden = true
+            heart3.isHidden = true
+        }
+        if GameScene.lives < 1{
+            heart1.isHidden = true
+            heart2.isHidden = true
+            heart3.isHidden = true
+        }
+    }
 }

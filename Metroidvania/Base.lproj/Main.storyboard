@@ -122,6 +122,11 @@
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <outlet property="heart1" destination="Gud-yH-xh0" id="ob4-kg-yiZ"/>
+                        <outlet property="heart2" destination="sAk-ew-Pi7" id="Pi3-Th-UgA"/>
+                        <outlet property="heart3" destination="VFQ-eM-NDn" id="lwr-Q7-S95"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>

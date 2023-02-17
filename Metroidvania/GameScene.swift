@@ -21,14 +21,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var down = false
     var up = false
     var key1 = false
-    var lives = 3
+    static var lives = 3
+    var gs : GameViewController!
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
-        explorer = self.childNode(withName: "explorer") as! SKSpriteNode
-        plank = self.childNode(withName: "plank") as! SKSpriteNode
-        platform = self.childNode(withName: "platform") as! SKSpriteNode
-        ladder = self.childNode(withName: "ladder") as! SKSpriteNode
+        explorer = (self.childNode(withName: "explorer") as! SKSpriteNode)
+        plank = (self.childNode(withName: "plank") as! SKSpriteNode)
+        platform = (self.childNode(withName: "platform") as! SKSpriteNode)
+        ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
         self.camera = cam
     }
     override func update(_ currentTime: TimeInterval) {
@@ -94,12 +95,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "spike"{
-            lives -= 1
+            GameScene.lives -= 1
             print("ouch")
+            gs.update()
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "spike"{
-            lives -= 1
+            GameScene.lives -= 1
             print("ouch")
+            gs.update()
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "life"{
+            contact.bodyB.node?.removeFromParent()
+            GameScene.lives += 1
+            print("yum")
+            gs.update()
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "life"{
+            contact.bodyA.node?.removeFromParent()
+            GameScene.lives += 1
+            print("yum")
+            gs.update()
         }
         
     }
