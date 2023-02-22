@@ -14,6 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var plank : SKSpriteNode!
     var platform : SKSpriteNode!
     var ladder : SKSpriteNode!
+    var mover : SKSpriteNode!
     let cam = SKCameraNode()
     var jumps = 0
     var climb = 1
@@ -22,7 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var up = false
     var key1 = false
     static var lives = 3
+    static var powers = 0
     var gs : GameViewController!
+    var right = 10
+    var powers = [Int:String]()
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -30,12 +34,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         plank = (self.childNode(withName: "plank") as! SKSpriteNode)
         platform = (self.childNode(withName: "platform") as! SKSpriteNode)
         ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
+        mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         self.camera = cam
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
+//        if mover.position.x == 3030{
+//            mover.physicsBody?.velocity = CGVector(dx: 20, dy: 0)
+//        }
+//        else if mover.position.x == 3080{
+//            mover.physicsBody?.velocity = CGVector(dx: -20, dy: 0)
+//        }
     }
     func didBegin(_ contact: SKPhysicsContact) {
+        
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
             jumps = 1
         }
@@ -114,6 +126,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contact.bodyA.node?.removeFromParent()
             GameScene.lives += 1
             print("yum")
+            gs.update()
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "firepower"{
+            contact.bodyB.node?.removeFromParent()
+            GameScene.powers += 1
+            print("fayuh")
+            powers[0] = "Flame"
+            gs.update()
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "firepower"{
+            contact.bodyA.node?.removeFromParent()
+            GameScene.powers += 1
+            print("fayuh")
+            powers[0] = "Flame"
+            gs.update()
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "icepower"{
+            contact.bodyB.node?.removeFromParent()
+            GameScene.powers += 1
+            print("ayce")
+            powers[1] = "Frost"
+            gs.update()
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "icepower"{
+            contact.bodyA.node?.removeFromParent()
+            GameScene.powers += 1
+            print("ayce")
+            powers[1] = "Frost"
+            gs.update()
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "lifepower"{
+            contact.bodyB.node?.removeFromParent()
+            GameScene.powers += 1
+            print("layfe")
+            powers[2] = "Growth"
+            gs.update()
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "lifepower"{
+            contact.bodyA.node?.removeFromParent()
+            GameScene.powers += 1
+            print("layfe")
+            powers[2] = "Growth"
             gs.update()
         }
         

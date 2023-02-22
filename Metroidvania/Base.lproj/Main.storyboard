@@ -118,14 +118,34 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Iys-r8-bvy">
+                                <rect key="frame" x="462" y="346" width="250" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title=""/>
+                                    <segment title=""/>
+                                </segments>
+                            </segmentedControl>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wuf-Io-Gvg">
+                                <rect key="frame" x="782" y="231" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
+                                    <imageReference key="image" image="flame.fill" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large"/>
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                </buttonConfiguration>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="controlOutlet" destination="Iys-r8-bvy" id="DWa-Lv-m1d"/>
                         <outlet property="heart1" destination="Gud-yH-xh0" id="ob4-kg-yiZ"/>
                         <outlet property="heart2" destination="sAk-ew-Pi7" id="Pi3-Th-UgA"/>
                         <outlet property="heart3" destination="VFQ-eM-NDn" id="lwr-Q7-S95"/>
+                        <outlet property="powerOutlet" destination="Wuf-Io-Gvg" id="nIZ-8W-9aW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -139,6 +159,7 @@
         <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
         <image name="arrowtriangle.up.fill" catalog="system" width="128" height="120"/>
         <image name="figure.highintensity.intervaltraining" catalog="system" width="94" height="128"/>
+        <image name="flame.fill" catalog="system" width="106" height="128"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

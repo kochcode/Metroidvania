@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var controlOutlet: UISegmentedControl!
+    @IBOutlet weak var powerOutlet: UIButton!
     @IBOutlet weak var heart1: UIImageView!
     @IBOutlet weak var heart2: UIImageView!
     @IBOutlet weak var heart3: UIImageView!
@@ -83,20 +85,41 @@ class GameViewController: UIViewController {
             heart2.isHidden = false
             heart3.isHidden = false
         }
-        if GameScene.lives == 2{
+        else if GameScene.lives == 2{
             heart1.isHidden = false
             heart2.isHidden = false
             heart3.isHidden = true
         }
-        if GameScene.lives == 1{
+        else if GameScene.lives == 1{
             heart1.isHidden = false
             heart2.isHidden = true
             heart3.isHidden = true
         }
-        if GameScene.lives < 1{
+        else if GameScene.lives < 1{
             heart1.isHidden = true
             heart2.isHidden = true
             heart3.isHidden = true
         }
+        if GameScene.powers < 1{
+            powerOutlet.isHidden = true
+            controlOutlet.isHidden = true
+        }
+        else if GameScene.powers == 1{
+            powerOutlet.isHidden = false
+            controlOutlet.isHidden = true
+        }
+        else if GameScene.powers >= 2{
+            replaceSegments(segments: play.powers)
+            controlOutlet.isHidden = false
+            for power in play.powers {
+                controlOutlet.setTitle("\(power.value)", forSegmentAt: power.key)
+            }
+        }
     }
+    func replaceSegments(segments: [Int:String]) {
+            controlOutlet.removeAllSegments()
+        for power in play.powers {
+            controlOutlet.insertSegment(withTitle: "\(power.value)", at: controlOutlet.numberOfSegments, animated: false)
+            }
+        }
 }
