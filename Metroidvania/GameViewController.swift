@@ -22,6 +22,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        //UIWindowScene.requestGeometryUpdate(<#T##self: UIWindowScene##UIWindowScene#>)
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {

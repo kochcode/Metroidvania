@@ -25,8 +25,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static var lives = 3
     static var powers = 0
     var gs : GameViewController!
-    var right = 10
+    var seconds = 0
     var powers = [Int:String]()
+    
+    override func sceneDidLoad() {
+        super.sceneDidLoad()
+        
+    }
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -36,15 +41,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         self.camera = cam
+        mover.run(SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)])) )
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
-//        if mover.position.x == 3030{
+
+//        if seconds <= 10{
+//            seconds += 1
 //            mover.physicsBody?.velocity = CGVector(dx: 20, dy: 0)
 //        }
-//        else if mover.position.x == 3080{
+//        else if seconds > 10 && seconds <= 20{
+//            seconds += 1
 //            mover.physicsBody?.velocity = CGVector(dx: -20, dy: 0)
 //        }
+//        else if seconds == 21{
+//            seconds = 0
+//        }
+        
     }
     func didBegin(_ contact: SKPhysicsContact) {
         
