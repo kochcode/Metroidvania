@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var platform : SKSpriteNode!
     var ladder : SKSpriteNode!
     var mover : SKSpriteNode!
+    var projectile : SKSpriteNode!
     let cam = SKCameraNode()
     var jumps = 0
     var climb = 1
@@ -27,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gs : GameViewController!
     var seconds = 0
     var powers = [Int:String]()
+    var shootable = true
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -40,6 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         platform = (self.childNode(withName: "platform") as! SKSpriteNode)
         ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
+        projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
+        projectile.isHidden = true
         self.camera = cam
         mover.run(SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)])) )
     }
@@ -144,44 +148,88 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "firepower"{
             contact.bodyB.node?.removeFromParent()
             GameScene.powers += 1
-            print("fayuh")
+            print("F")
             powers[0] = "Flame"
             gs.update()
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "firepower"{
             contact.bodyA.node?.removeFromParent()
             GameScene.powers += 1
-            print("fayuh")
+            print("F")
             powers[0] = "Flame"
             gs.update()
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "icepower"{
-            contact.bodyB.node?.removeFromParent()
-            GameScene.powers += 1
-            print("ayce")
-            powers[1] = "Frost"
-            gs.update()
+            if GameScene.powers == 1{
+                contact.bodyB.node?.removeFromParent()
+                GameScene.powers += 1
+                print("I")
+                powers[1] = "Frost"
+                gs.update()
+            }
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "icepower"{
-            contact.bodyA.node?.removeFromParent()
-            GameScene.powers += 1
-            print("ayce")
-            powers[1] = "Frost"
-            gs.update()
+            if GameScene.powers == 1{
+                contact.bodyA.node?.removeFromParent()
+                GameScene.powers += 1
+                print("I")
+                powers[1] = "Frost"
+                gs.update()
+            }
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "lifepower"{
-            contact.bodyB.node?.removeFromParent()
-            GameScene.powers += 1
-            print("layfe")
-            powers[2] = "Growth"
-            gs.update()
+            if GameScene.powers == 2{
+                contact.bodyB.node?.removeFromParent()
+                GameScene.powers += 1
+                print("L")
+                powers[2] = "Growth"
+                gs.update()
+            }
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "lifepower"{
-            contact.bodyA.node?.removeFromParent()
-            GameScene.powers += 1
-            print("layfe")
-            powers[2] = "Growth"
-            gs.update()
+            if GameScene.powers == 2{
+                contact.bodyA.node?.removeFromParent()
+                GameScene.powers += 1
+                print("L")
+                powers[2] = "Growth"
+                gs.update()
+            }
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "sunpower"{
+            if GameScene.powers == 3{
+                contact.bodyB.node?.removeFromParent()
+                GameScene.powers += 1
+                print("S")
+                powers[3] = "Light"
+                gs.update()
+            }
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "sunpower"{
+            if GameScene.powers == 3{
+                contact.bodyA.node?.removeFromParent()
+                GameScene.powers += 1
+                print("S")
+                powers[3] = "Light"
+                gs.update()
+            }
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "darkpower"{
+            if GameScene.powers == 4{
+                contact.bodyB.node?.removeFromParent()
+                GameScene.powers += 1
+                print("D")
+                powers[4] = "Shadow"
+                gs.update()
+            }
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "darkpower"{
+            if GameScene.powers == 4{
+                contact.bodyA.node?.removeFromParent()
+                GameScene.powers += 1
+                print("D")
+                powers[4] = "Shadow"
+                gs.update()
+            }
         }
         
     }
@@ -232,11 +280,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
     }
-    
     func jump(){
         if jumps > 0{
             explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
             jumps -= 1
+        }
+    }
+    func shoot(){
+        if shootable == true{
+            shootable = false
+            projectile.position.x = explorer.position.x + 5
+            projectile.position.y = explorer.position.y
+            projectile.isHidden = false
+            projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.25))
+            print("pow \(shootable)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                self.projectile.isHidden = true
+                self.shootable = true
+            }
         }
     }
 }

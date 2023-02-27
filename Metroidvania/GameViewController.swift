@@ -75,11 +75,29 @@ class GameViewController: UIViewController {
     @IBAction func upMoveLetGo(_ sender: UIButton) {
         play.stopUp()
     }
-    
-    
     @IBAction func jumpButton(_ sender: UIButton) {
         play.jump()
     }
+    @IBAction func shootButton(_ sender: UIButton) {
+        if controlOutlet.selectedSegmentIndex == 0{
+            play.projectile.color = UIColor.red
+        }
+        else if controlOutlet.selectedSegmentIndex == 1{
+            play.projectile.color = UIColor.blue
+        }
+        else if controlOutlet.selectedSegmentIndex == 2{
+            play.projectile.color = UIColor.green
+        }
+        else if controlOutlet.selectedSegmentIndex == 3{
+            play.projectile.color = UIColor.yellow
+        }
+        else if controlOutlet.selectedSegmentIndex == 4{
+            play.projectile.color = UIColor.black
+        }
+            
+        play.shoot()
+    }
+    
     func update(){
         if GameScene.lives == 3{
             heart1.isHidden = false
