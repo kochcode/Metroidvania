@@ -16,6 +16,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var ladder : SKSpriteNode!
     var mover : SKSpriteNode!
     var projectile : SKSpriteNode!
+    var water : SKSpriteNode!
+    var ice : SKSpriteNode!
     let cam = SKCameraNode()
     var jumps = 0
     var climb = 1
@@ -43,24 +45,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
+        water = (self.childNode(withName: "water") as! SKSpriteNode)
+        ice = (self.childNode(withName: "ice") as! SKSpriteNode)
         projectile.isHidden = true
         self.camera = cam
         mover.run(SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)])) )
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
-
-//        if seconds <= 10{
-//            seconds += 1
-//            mover.physicsBody?.velocity = CGVector(dx: 20, dy: 0)
-//        }
-//        else if seconds > 10 && seconds <= 20{
-//            seconds += 1
-//            mover.physicsBody?.velocity = CGVector(dx: -20, dy: 0)
-//        }
-//        else if seconds == 21{
-//            seconds = 0
-//        }
         
     }
     func didBegin(_ contact: SKPhysicsContact) {
@@ -231,8 +223,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 gs.update()
             }
         }
-        
+        if contact.bodyA.node?.name == "projectile" && contact.bodyB.node?.name == "ground"{
+            projectile.isHidden = true
+            projectile.position.x = 1000
+            projectile.position.y = 1000
+        }
+        if contact.bodyB.node?.name == "projectile" && contact.bodyA.node?.name == "ground"{
+            projectile.isHidden = true
+            projectile.position.x = 1000
+            projectile.position.y = 1000
+        }
+        if contact.bodyA.node?.name == "projectile" && contact.bodyB.node?.name == "vines"{
+            if projectile.color == UIColor.red{
+                contact.bodyB.node?.removeFromParent()
+            }
+            else{
+                projectile.isHidden = true
+                projectile.position.x = 1000
+                projectile.position.y = 1000
+            }
+        }
+        if contact.bodyB.node?.name == "projectile" && contact.bodyA.node?.name == "vines"{
+            if projectile.color == UIColor.red{
+                contact.bodyA.node?.removeFromParent()
+            }
+            else{
+                projectile.isHidden = true
+                projectile.position.x = 1000
+                projectile.position.y = 1000
+            }
+        }
+        if contact.bodyA.node?.name == "projectile" && contact.bodyB.node?.name == "water"{
+            if projectile.color == UIColor.blue{
+                if explorer.position.y > water.position.y{
+                    print("ice before:\(ice.position.x)")
+//                    ice.position.x = projectile.position.x
+                    ice.run(SKAction.moveTo(x: projectile.position.x, duration: 0.2))
+                    ice.run(SKAction.moveTo(y: projectile.position.y + 50, duration: 0.2))
+                    //ice.position.y = projectile.position.y + 50
+                    print("ice after:\(ice.position.x)")
+                }
+            }
+            else{
+                projectile.isHidden = true
+            }
+        }
+        if contact.bodyB.node?.name == "projectile" && contact.bodyA.node?.name == "water"{
+            if projectile.color == UIColor.blue{
+                if explorer.position.y > water.position.y{
+                    ice.position.x = projectile.position.x
+                    ice.position.y = projectile.position.y + 25
+                    print("ice")
+                }
+            }
+            else{
+                projectile.isHidden = true
+            }
+        }
     }
+    
     func mLeft(){
         explorer.physicsBody?.velocity = CGVector(dx: -450, dy: 0)
     }
@@ -289,14 +338,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func shoot(){
         if shootable == true{
             shootable = false
-            projectile.position.x = explorer.position.x + 5
+            projectile.position.x = explorer.position.x + 20
             projectile.position.y = explorer.position.y
             projectile.isHidden = false
             projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.25))
-            print("pow \(shootable)")
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                self.projectile.isHidden = true
-                self.shootable = true
+                if self.projectile.color == UIColor.blue{
+                    self.projectile.run(SKAction.moveTo(y: self.projectile.position.y - 50, duration: 0.25))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                        self.projectile.isHidden = true
+                        self.shootable = true
+                        self.projectile.position.x = 1000
+                        self.projectile.position.y = 1000
+                    }
+                }
+                else{
+                    self.projectile.isHidden = true
+                    self.shootable = true
+                    self.projectile.position.x = 1000
+                    self.projectile.position.y = 1000
+                }
             }
         }
     }
