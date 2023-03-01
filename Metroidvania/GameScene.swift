@@ -31,6 +31,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var seconds = 0
     var powers = [Int:String]()
     var shootable = true
+    var movable = true
+    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -48,8 +50,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         water = (self.childNode(withName: "water") as! SKSpriteNode)
         ice = (self.childNode(withName: "ice") as! SKSpriteNode)
         projectile.isHidden = true
+        ice.isHidden = true
         self.camera = cam
-        mover.run(SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)])) )
+        var movingAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
+        mover.run(movingAction)
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
@@ -63,7 +67,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ground"{
             jumps = 1
         }
-        
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "water"{
+            jumps = 1
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "water"{
+            jumps = 1
+        }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "plank"{
             jumps = 1
             
@@ -256,12 +265,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyA.node?.name == "projectile" && contact.bodyB.node?.name == "water"{
             if projectile.color == UIColor.blue{
                 if explorer.position.y > water.position.y{
-                    print("ice before:\(ice.position.x)")
-//                    ice.position.x = projectile.position.x
+                    ice.isHidden = true
                     ice.run(SKAction.moveTo(x: projectile.position.x, duration: 0.2))
-                    ice.run(SKAction.moveTo(y: projectile.position.y + 50, duration: 0.2))
-                    //ice.position.y = projectile.position.y + 50
-                    print("ice after:\(ice.position.x)")
+                    ice.run(SKAction.moveTo(y: projectile.position.y + 45, duration: 0.2))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                        self.ice.isHidden = false
+                    }
                 }
             }
             else{
@@ -271,13 +280,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyB.node?.name == "projectile" && contact.bodyA.node?.name == "water"{
             if projectile.color == UIColor.blue{
                 if explorer.position.y > water.position.y{
-                    ice.position.x = projectile.position.x
-                    ice.position.y = projectile.position.y + 25
-                    print("ice")
+                    ice.isHidden = true
+                    ice.run(SKAction.moveTo(x: projectile.position.x, duration: 0.2))
+                    ice.run(SKAction.moveTo(y: projectile.position.y + 40, duration: 0.2))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                        self.ice.isHidden = false
+                    }
                 }
             }
             else{
                 projectile.isHidden = true
+            }
+        }
+        if contact.bodyA.node?.name == "projectile" && contact.bodyB.node?.name == "mover"{
+            if projectile.color == UIColor.green{
+                mover.color = UIColor.green
+                mover.isPaused = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
+                    self.mover.color = UIColor.gray
+                    self.mover.isPaused = false
+                }
+            }
+            else{
+                projectile.isHidden = true
+                projectile.position.x = 1000
+                projectile.position.y = 1000
+            }
+        }
+        if contact.bodyB.node?.name == "projectile" && contact.bodyA.node?.name == "mover"{
+            if projectile.color == UIColor.green{
+                print("stopp")
+                mover.isPaused = true
+                
+            }
+            else{
+                projectile.isHidden = true
+                projectile.position.x = 1000
+                projectile.position.y = 1000
             }
         }
     }
