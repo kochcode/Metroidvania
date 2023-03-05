@@ -92,9 +92,8 @@ class GameViewController: UIViewController {
             play.projectile.color = UIColor.yellow
         }
         else if controlOutlet.selectedSegmentIndex == 4{
-            play.projectile.color = UIColor.black
+            play.projectile.color = UIColor.purple
         }
-            
         play.shoot()
     }
     

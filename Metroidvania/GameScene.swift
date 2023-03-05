@@ -34,6 +34,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var shootable = true
     var movable = true
     var seeable = false
+    var hurtable = true
+    var onWater = false
+    var left = false
+    var moving = ""
+    var inAir = false
     
     
     override func sceneDidLoad() {
@@ -53,13 +58,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ice = (self.childNode(withName: "ice") as! SKSpriteNode)
         ghosts.append(self.childNode(withName: "ghost") as! SKSpriteNode)
         ghosts.append(self.childNode(withName: "ghost2") as! SKSpriteNode)
+        explorer.color = UIColor.cyan
         projectile.isHidden = true
         ice.isHidden = true
         for g in ghosts{
             g.isHidden = true
         }
         self.camera = cam
-        var movingAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
+        let movingAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
         mover.run(movingAction)
     }
     override func update(_ currentTime: TimeInterval) {
@@ -70,54 +76,78 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
             jumps = 1
+            onWater = false
+            inAir = false
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ground"{
             jumps = 1
+            onWater = false
+            inAir = false
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "water"{
             jumps = 1
+            onWater = true
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "water"{
             jumps = 1
+            onWater = true
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ice"{
             jumps = 1
+            onWater = false
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ice"{
             jumps = 1
+            onWater = false
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ghost"{
             jumps = 1
+            onWater = false
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ghost"{
             jumps = 1
+            onWater = false
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "plank"{
             jumps = 1
-            
+            onWater = false
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "plank"{
             jumps = 1
+            onWater = false
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "mover"{
+            jumps = 1
+            onWater = false
+            
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "mover"{
+            jumps = 1
+            onWater = false
         }
         
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "platform"{
             climb = 2
             print(climb)
             jumps = 1
+            onWater = false
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "platform"{
             climb = 2
             print(climb)
             jumps = 1
+            onWater = false
         }
         
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ladder"{
             climb2 = true
             print(climb2)
+            onWater = false
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ladder"{
             climb2 = true
             print(climb2)
+            onWater = false
         }
         
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "key"{
@@ -144,14 +174,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "spike"{
-            GameScene.lives -= 1
-            print("ouch")
-            gs.update()
+            if hurtable == true{
+                if explorer.color == UIColor.cyan{
+                    GameScene.lives -= 1
+                    print("ouch")
+                    explorer.color = UIColor.red
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        self.explorer.color = UIColor.cyan
+                    }
+                }
+                gs.update()
+            }
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "spike"{
-            GameScene.lives -= 1
-            print("ouch")
-            gs.update()
+            if hurtable == true{
+                if explorer.color == UIColor.cyan{
+                    GameScene.lives -= 1
+                    print("ouch")
+                    explorer.color = UIColor.red
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        self.explorer.color = UIColor.cyan
+                    }
+                }
+                gs.update()
+            }
         }
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "life"{
             contact.bodyB.node?.removeFromParent()
@@ -344,16 +390,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func mLeft(){
-        explorer.physicsBody?.velocity = CGVector(dx: -450, dy: 0)
+        if inAir == false{
+            explorer.physicsBody?.velocity = CGVector(dx: -450, dy: 0)
+            left = true
+            moving = "left"
+        }
     }
     func stopLeft(){
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        moving = "no"
     }
     func mRight(){
-        explorer.physicsBody?.velocity = CGVector(dx: 450, dy: 0)
+        if inAir == false{
+            explorer.physicsBody?.velocity = CGVector(dx: 450, dy: 0)
+            left = false
+            moving = "right"
+        }
     }
     func stopRight(){
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        moving = "no"
     }
     func mDown(){
         down = true
@@ -394,75 +450,164 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if jumps > 0{
             explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
             jumps -= 1
+            inAir = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15){
+                self.inAir = false
+            }
         }
     }
     func shoot(){
         if shootable == true{
             shootable = false
-            projectile.position.x = explorer.position.x + 20
-            projectile.position.y = explorer.position.y
-            projectile.isHidden = false
+            if projectile.color != UIColor.yellow{
+                if left == true{
+                    if moving == "left"{
+                        projectile.position.x = explorer.position.x - 30
+                    }
+                    else if moving == "no"{
+                        projectile.position.x = explorer.position.x - 20
+                    }
+                }
+                else if left == false{
+                    if moving == "right"{
+                        projectile.position.x = explorer.position.x + 30
+                    }
+                    else if moving == "no"{
+                        projectile.position.x = explorer.position.x + 20
+                    }
+                }
+            }
             if projectile.color == UIColor.red{
-                projectile.run(SKAction.moveTo(x: projectile.position.x + 100, duration: 0.2))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                        self.projectile.isHidden = true
-                        self.shootable = true
-                        self.projectile.position.x = 1000
-                        self.projectile.position.y = 1000
+                projectile.isHidden = false
+                projectile.position.y = explorer.position.y
+                if left == true{
+                    if moving == "left"{
+                        print("goingleft")
+                        projectile.run(SKAction.moveTo(x: projectile.position.x - 200, duration: 0.2))
+                    }
+                    else if moving == "no"{
+                        projectile.run(SKAction.moveTo(x: projectile.position.x - 100, duration: 0.2))
                     }
                 }
-            else if projectile.color == UIColor.blue{
-                projectile.run(SKAction.moveTo(x: projectile.position.x + 100, duration: 0.125))
-                projectile.run(SKAction.moveTo(y: self.projectile.position.y - 50, duration: 0.25))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4){
-                        self.projectile.isHidden = true
-                        self.shootable = true
-                        self.projectile.position.x = 1000
-                        self.projectile.position.y = 1000
+                else if left == false{
+                    if moving == "right"{
+                        print("goingright")
+                        projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.2))
                     }
-            }
-            else if projectile.color == UIColor.green{
-                projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.25))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
-                        self.projectile.isHidden = true
-                        self.shootable = true
-                        self.projectile.position.x = 1000
-                        self.projectile.position.y = 1000
+                    else if moving == "no"{
+                        projectile.run(SKAction.moveTo(x: projectile.position.x + 100, duration: 0.2))
                     }
-            }
-            else if projectile.color == UIColor.yellow{
-                projectile.run(SKAction.moveTo(y: self.projectile.position.y + 50, duration: 1.0))
-                for g in ghosts{
-                    g.isHidden = false
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
                     self.projectile.isHidden = true
                     self.shootable = true
                     self.projectile.position.x = 1000
                     self.projectile.position.y = 1000
-                    for g in self.ghosts{
-                        g.isHidden = true
-                    }
                 }
             }
-            else if projectile.color == UIColor.black{
-                projectile.run(SKAction.moveTo(x: projectile.position.x + 50, duration: 0.1))
-                projectile.run(SKAction.moveTo(y: projectile.position.y + 50, duration: 0.1))
-                projectile.run(SKAction.moveTo(x: projectile.position.x - 50, duration: 0.1))
-                projectile.run(SKAction.moveTo(y: projectile.position.y - 50, duration: 0.1))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4){
+            else if projectile.color == UIColor.blue{
+                projectile.isHidden = false
+                projectile.position.y = explorer.position.y
+                if left == true{
+                    if moving == "left"{
+                        print("goingleft")
+                        projectile.run(SKAction.moveTo(x: projectile.position.x - 200, duration: 0.2))
+                    }
+                    else if moving == "no"{
+                        projectile.run(SKAction.moveTo(x: projectile.position.x - 100, duration: 0.2))
+                    }
+                }
+                else if left == false{
+                    if moving == "right"{
+                        print("goingright")
+                        projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.2))
+                    }
+                    else if moving == "no"{
+                        projectile.run(SKAction.moveTo(x: projectile.position.x + 100, duration: 0.2))
+                    }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){
+                    if self.onWater == true{
+                        self.projectile.run(SKAction.moveTo(y: self.projectile.position.y - 50, duration: 0.25))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                            self.projectile.isHidden = true
+                            self.shootable = true
+                            self.projectile.position.x = 1000
+                            self.projectile.position.y = 1000
+                        }
+                    }
+                    else{
                         self.projectile.isHidden = true
                         self.shootable = true
                         self.projectile.position.x = 1000
                         self.projectile.position.y = 1000
                     }
+                }
             }
-            else{
+        }
+        else if projectile.color == UIColor.green{
+            projectile.isHidden = false
+            projectile.position.y = explorer.position.y
+            if left == true{
+                if moving == "left"{
+                    print("goingleft")
+                    projectile.run(SKAction.moveTo(x: projectile.position.x - 300, duration: 0.25))
+                }
+                else if moving == "no"{
+                    projectile.run(SKAction.moveTo(x: projectile.position.x - 200, duration: 0.25))
+                }
+            }
+            else if left == false{
+                if moving == "right"{
+                    print("goingright")
+                    projectile.run(SKAction.moveTo(x: projectile.position.x + 300, duration: 0.25))
+                }
+                else if moving == "no"{
+                    projectile.run(SKAction.moveTo(x: projectile.position.x + 200, duration: 0.25))
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35){
                 self.projectile.isHidden = true
                 self.shootable = true
                 self.projectile.position.x = 1000
                 self.projectile.position.y = 1000
             }
+        }
+        else if projectile.color == UIColor.yellow{
+            projectile.isHidden = false
+            projectile.position.x = explorer.position.x
+            projectile.position.y = explorer.position.y + 20
+            projectile.run(SKAction.moveTo(y: self.projectile.position.y + 50, duration: 1.0))
+            for g in ghosts{
+                g.isHidden = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0){
+                self.projectile.isHidden = true
+                self.shootable = true
+                self.projectile.position.x = 1000
+                self.projectile.position.y = 1000
+                for g in self.ghosts{
+                    g.isHidden = true
+                }
+            }
+        }
+        else if projectile.color == UIColor.purple{
+            explorer.color = UIColor.purple
+            hurtable = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0){
+                self.explorer.color = UIColor.gray
+                self.hurtable = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0){
+                    self.explorer.color = UIColor.cyan
+                    self.shootable = true
+                }
+            }
+        }
+        else{
+            self.projectile.isHidden = true
+            self.shootable = true
+            self.projectile.position.x = 1000
+            self.projectile.position.y = 1000
         }
     }
 }
