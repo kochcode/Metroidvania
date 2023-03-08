@@ -18,25 +18,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var projectile : SKSpriteNode!
     var water : SKSpriteNode!
     var ice : SKSpriteNode!
+    
     var ghosts = [SKSpriteNode]()
-    var enemies = [SKSpriteNode]()
+    var skeletons = [SKSpriteNode]()
+    var shields = [SKSpriteNode]()
+    var phantoms = [SKSpriteNode]()
+    var peashooters = [SKSpriteNode]()
+    var peas = [SKSpriteNode]()
+    
     let cam = SKCameraNode()
     var jumps = 0
     var climb = 1
     var climb2 = false
     var down = false
     var up = false
+    
     var key1 = false
     static var lives = 3
     static var powers = 0
+    
     var gs : GameViewController!
     var seconds = 0
+    
     var powers = [Int:String]()
     var shootable = true
     var movable = true
     var seeable = false
     var hurtable = true
     var onWater = false
+    
     var left = false
     var moving = ""
     var inAir = false
@@ -57,10 +67,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
         water = (self.childNode(withName: "water") as! SKSpriteNode)
         ice = (self.childNode(withName: "ice") as! SKSpriteNode)
+        
         ghosts.append(self.childNode(withName: "ghost") as! SKSpriteNode)
         ghosts.append(self.childNode(withName: "ghost2") as! SKSpriteNode)
-        enemies.append(self.childNode(withName: "enemy1") as! SKSpriteNode)
-        enemies.append(self.childNode(withName: "enemy2") as! SKSpriteNode)
+        
+        skeletons.append(self.childNode(withName: "skelly1") as! SKSpriteNode)
+        skeletons.append(self.childNode(withName: "skelly2") as! SKSpriteNode)
+        skeletons.append(self.childNode(withName: "skelly3") as! SKSpriteNode)
+        
+        shields.append(self.childNode(withName: "upShield1") as! SKSpriteNode)
+        shields.append(self.childNode(withName: "upShield2") as! SKSpriteNode)
+        shields.append(self.childNode(withName: "sideShield1") as! SKSpriteNode)
+        
+        phantoms.append(self.childNode(withName: "phantm1") as! SKSpriteNode)
+        phantoms.append(self.childNode(withName: "fastPhantm1") as! SKSpriteNode)
+        phantoms.append(self.childNode(withName: "superFastPhantm1") as! SKSpriteNode)
+        
+        peashooters.append(self.childNode(withName: "pshooter1") as! SKSpriteNode)
+        peas.append(self.childNode(withName: "pea1") as! SKSpriteNode)
+        
         explorer.color = UIColor.cyan
         projectile.isHidden = true
         ice.isHidden = true
@@ -68,22 +93,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             g.isHidden = true
         }
         self.camera = cam
-        for e in enemies{
-            let enemyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 100, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 100, duration: 3), SKAction.wait(forDuration: 3)]))
-            e.run(enemyMove1)
-            print(e)
+        
+//        for e in peashooters{
+//            peas[e].position = peashooters[e]
+//        }
+        
+        for e in phantoms{
+            let phantmMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 200, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 200, duration: 3), SKAction.wait(forDuration: 3)]))
+            let phantmMove2 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: e.position.y + 20, duration: 1), SKAction.moveTo(y: e.position.y - 20, duration: 1)]))
+            let phantmMove3 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 200, duration: 2), SKAction.wait(forDuration: 2), SKAction.moveTo(x: e.position.x - 200, duration: 2), SKAction.wait(forDuration: 2)]))
+            let phantmMove4 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 200, duration: 1), SKAction.wait(forDuration: 1), SKAction.moveTo(x: e.position.x - 200, duration: 1), SKAction.wait(forDuration: 1)]))
+            
+            
+            if e.name == "phantm1"{
+                e.run(phantmMove1)
+            }
+            if e.name == "fastPhantm1"{
+                e.run(phantmMove3)
+            }
+            if e.name == "superFastPhantm1"{
+                e.run(phantmMove4)
+            }
+                e.run(phantmMove2)
+        }
+        
+        
+        for e in skeletons{
+            let skellyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 100, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 100, duration: 3), SKAction.wait(forDuration: 3)]))
+            e.run(skellyMove1)
         }
         let platformAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
         mover.run(platformAction)
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
+        shields[0].position.y = skeletons[1].position.y + 25
+        shields[0].position.x = skeletons[1].position.x
+        shields[1].position.y = skeletons[2].position.y + 25
+        shields[1].position.x = skeletons[2].position.x
+        shields[2].position.y = skeletons[2].position.y
+        shields[2].position.x = skeletons[2].position.x + 25
         
     }
     func didBegin(_ contact: SKPhysicsContact) {
         
         //ENEMIES CONTACT EXPLORER
-        for e in enemies{
+        for e in skeletons{
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == e.name{
                 print("aaaa")
                 if explorer.position.y > e.position.y{
