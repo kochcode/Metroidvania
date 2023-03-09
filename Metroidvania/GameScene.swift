@@ -13,6 +13,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var explorer : SKSpriteNode!
     var plank : SKSpriteNode!
     var platform : SKSpriteNode!
+    
+    var breakablePlatform : SKSpriteNode!
+    var spikePlatform : SKSpriteNode!
+    var pSpikes = [SKSpriteNode]()
+    
     var ladder : SKSpriteNode!
     var mover : SKSpriteNode!
     var projectile : SKSpriteNode!
@@ -62,6 +67,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         explorer = (self.childNode(withName: "explorer") as! SKSpriteNode)
         plank = (self.childNode(withName: "plank") as! SKSpriteNode)
         platform = (self.childNode(withName: "platform") as! SKSpriteNode)
+        
+        breakablePlatform = (self.childNode(withName: "breakable") as! SKSpriteNode)
+        spikePlatform = (self.childNode(withName: "spikePlatform") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike1") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike2") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike3") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike4") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike5") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike6") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike7") as! SKSpriteNode)
+        
         ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
@@ -97,6 +113,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        for e in peashooters{
 //            peas[e].position = peashooters[e]
 //        }
+        for p in pSpikes{
+            let spikeMove =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: p.position.y, duration: 1), SKAction.wait(forDuration: 4), SKAction.moveTo(y: p.position.y + 25, duration: 0.5), SKAction.wait(forDuration: 4)]))
+            let spikeHide = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.fadeAlpha(to: 0.0, duration: 1.0), SKAction.wait(forDuration: 2), SKAction.fadeAlpha(to: 1.0, duration: 1.0), SKAction.wait(forDuration: 4.5)]))
+            p.run(spikeMove)
+            p.run(spikeHide)
+            
+        }
         
         for e in phantoms{
             let phantmMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 200, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 200, duration: 3), SKAction.wait(forDuration: 3)]))
@@ -180,6 +204,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         }
                         gs.update()
                     }
+                }
+            }
+        }
+        //SPIKE PLATFORM CONTACT EXPLORER
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
+            jumps = 1
+            onWater = false
+            inAir = false
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ground"{
+            jumps = 1
+            onWater = false
+            inAir = false
+        }
+        
+        //BREAKABLE PLATFORM CONTACT EXPLORER
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "breakable"{
+            jumps = 1
+            onWater = false
+            inAir = false
+            let pos = breakablePlatform.position
+            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 3.0)
+             let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
+            contact.bodyB.node?.run(fadeOut)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                contact.bodyB.node?.position.x = 1000
+                contact.bodyB.node?.position.y = 1000
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                    self.breakablePlatform.position = pos
+                    contact.bodyB.node?.run(fadeIn)
+                }
+            }
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "breakable"{
+            jumps = 1
+            onWater = false
+            inAir = false
+            let pos = breakablePlatform.position
+            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 3.0)
+             let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
+            contact.bodyB.node?.run(fadeOut)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                contact.bodyB.node?.position.x = 1000
+                contact.bodyB.node?.position.y = 1000
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                    self.breakablePlatform.position = pos
+                    contact.bodyB.node?.run(fadeIn)
                 }
             }
         }
