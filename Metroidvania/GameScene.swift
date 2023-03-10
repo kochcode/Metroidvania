@@ -26,10 +26,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var ghosts = [SKSpriteNode]()
     var skeletons = [SKSpriteNode]()
+    var grassSkele = [SKSpriteNode]()
     var shields = [SKSpriteNode]()
+    var grassShields = [SKSpriteNode]()
     var phantoms = [SKSpriteNode]()
     var peashooters = [SKSpriteNode]()
     var peas = [SKSpriteNode]()
+    
+    var arrows = [SKSpriteNode]()
+    var arrowShooters = [SKSpriteNode]()
     
     let cam = SKCameraNode()
     var jumps = 0
@@ -55,6 +60,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var left = false
     var moving = ""
     var inAir = false
+    
+    var fireCharges = 0
     
     
     override func sceneDidLoad() {
@@ -91,9 +98,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         skeletons.append(self.childNode(withName: "skelly2") as! SKSpriteNode)
         skeletons.append(self.childNode(withName: "skelly3") as! SKSpriteNode)
         
+        grassSkele.append(self.childNode(withName: "grassSkelly1") as! SKSpriteNode)
+        
         shields.append(self.childNode(withName: "upShield1") as! SKSpriteNode)
         shields.append(self.childNode(withName: "upShield2") as! SKSpriteNode)
         shields.append(self.childNode(withName: "sideShield1") as! SKSpriteNode)
+        
+        grassShields.append(self.childNode(withName: "growthShield1") as! SKSpriteNode)
         
         phantoms.append(self.childNode(withName: "phantm1") as! SKSpriteNode)
         phantoms.append(self.childNode(withName: "fastPhantm1") as! SKSpriteNode)
@@ -101,6 +112,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         peashooters.append(self.childNode(withName: "pshooter1") as! SKSpriteNode)
         peas.append(self.childNode(withName: "pea1") as! SKSpriteNode)
+        
+        arrowShooters.append(self.childNode(withName: "arrowShooterDown1") as! SKSpriteNode)
+        arrows.append(self.childNode(withName: "arrowDown1") as! SKSpriteNode)
         
         explorer.color = UIColor.cyan
         projectile.isHidden = true
@@ -113,13 +127,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        for e in peashooters{
 //            peas[e].position = peashooters[e]
 //        }
+        for a in arrows{
+            let arrowMoveDown =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y - 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y + 400, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            if a.name == "arrowDown1"{
+                a.run(arrowMoveDown)
+            }
+        }
         for p in pSpikes{
             let spikeMove =
-            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: p.position.y, duration: 1), SKAction.wait(forDuration: 4), SKAction.moveTo(y: p.position.y + 25, duration: 0.5), SKAction.wait(forDuration: 4)]))
-            let spikeHide = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), SKAction.fadeAlpha(to: 0.0, duration: 1.0), SKAction.wait(forDuration: 2), SKAction.fadeAlpha(to: 1.0, duration: 1.0), SKAction.wait(forDuration: 4.5)]))
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: p.position.y, duration: 1), SKAction.wait(forDuration: 2), SKAction.moveTo(y: p.position.y + 25, duration: 0.5), SKAction.wait(forDuration: 4)]))
             p.run(spikeMove)
-            p.run(spikeHide)
-            
         }
         
         for e in phantoms{
@@ -141,7 +159,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 e.run(phantmMove2)
         }
         
-        
+        for e in grassSkele{
+            let gskellyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 50, duration: 4), SKAction.wait(forDuration: 2), SKAction.moveTo(x: e.position.x - 50, duration: 4), SKAction.wait(forDuration: 2)]))
+            e.run(gskellyMove1)
+        }
         for e in skeletons{
             let skellyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 100, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 100, duration: 3), SKAction.wait(forDuration: 3)]))
             e.run(skellyMove1)
@@ -157,14 +178,63 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shields[1].position.x = skeletons[2].position.x
         shields[2].position.y = skeletons[2].position.y
         shields[2].position.x = skeletons[2].position.x + 25
+        grassShields[0].position.x = grassSkele[0].position.x
+        grassShields[0].position.y = grassSkele[0].position.y + 25
         
     }
     func didBegin(_ contact: SKPhysicsContact) {
         
-        //ENEMIES CONTACT EXPLORER
-        for e in skeletons{
+        //GROWTH SHIELD CONTACT EXPLORER
+        for s in grassShields{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == s.name{
+                if explorer.color == UIColor.orange{
+                    contact.bodyB.node?.removeFromParent()
+                    explorer.physicsBody?.velocity = (CGVector(dx: 0, dy: 0))
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 25))
+                    jumps += 1
+                    explorer.color = UIColor.cyan
+                }
+                else{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouchie")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == s.name{
+                if explorer.color == UIColor.orange{
+                    contact.bodyA.node?.removeFromParent()
+                    explorer.physicsBody?.velocity = (CGVector(dx: 0, dy: 0))
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 25))
+                    jumps += 1
+                    explorer.color = UIColor.cyan
+                }
+                else{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouchie")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+            
+        }
+        //GRASS SKELETONS CONTACT EXPLORER
+        for e in grassSkele{
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == e.name{
-                print("aaaa")
                 if explorer.position.y > e.position.y{
                     contact.bodyB.node?.removeFromParent()
                     explorer.physicsBody?.velocity = (CGVector(dx: 0, dy: 0))
@@ -207,17 +277,127 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-        //SPIKE PLATFORM CONTACT EXPLORER
-        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
+        //SKELETONS CONTACT EXPLORER
+        for e in skeletons{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == e.name{
+                if explorer.position.y > e.position.y{
+                    contact.bodyB.node?.removeFromParent()
+                    explorer.physicsBody?.velocity = (CGVector(dx: 0, dy: 0))
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 25))
+                    jumps += 1
+                }
+                else{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouchie")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == e.name{
+                if explorer.position.y > e.position.y{
+                    contact.bodyA.node?.removeFromParent()
+                    explorer.physicsBody?.velocity = (CGVector(dx: 0, dy: 0))
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 25))
+                    jumps += 1
+                }
+                else{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouchie")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+        }
+        
+        //SPIKES PLATFORM CONTACT EXPLORER
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "spikePlatform"{
             jumps = 1
             onWater = false
             inAir = false
         }
-        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "ground"{
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "spikePlatform"{
             jumps = 1
             onWater = false
             inAir = false
         }
+        //ARROWS CONTACT EXPLORER
+        for a in arrows{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == a.name{
+                if a.isHidden == false{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouch")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == a.name{
+                if a.isHidden == false{
+                    if hurtable == true{
+                        if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                            GameScene.lives -= 1
+                            print("ouch")
+                            explorer.color = UIColor.red
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                                self.explorer.color = UIColor.cyan
+                            }
+                        }
+                        gs.update()
+                    }
+                }
+            }
+        }
+        
+        //SPIKES ON PLATFORM CONTACT EXPLORER
+        for p in pSpikes{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == p.name{
+                if hurtable == true{
+                    if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                        GameScene.lives -= 1
+                        print("ouch")
+                        explorer.color = UIColor.red
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                            self.explorer.color = UIColor.cyan
+                        }
+                    }
+                    gs.update()
+                }
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == p.name{
+                if hurtable == true{
+                    if explorer.color == UIColor.cyan || explorer.color == UIColor.gray{
+                        GameScene.lives -= 1
+                        print("ouch")
+                        explorer.color = UIColor.red
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                            self.explorer.color = UIColor.cyan
+                        }
+                    }
+                    gs.update()
+                }
+            }
+        }
+        
         
         //BREAKABLE PLATFORM CONTACT EXPLORER
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "breakable"{
@@ -225,15 +405,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             onWater = false
             inAir = false
             let pos = breakablePlatform.position
-            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 3.0)
+            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 2.0)
              let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
-            contact.bodyB.node?.run(fadeOut)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
-                contact.bodyB.node?.position.x = 1000
-                contact.bodyB.node?.position.y = 1000
+            contact.bodyA.node?.run(fadeOut)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2){
+                contact.bodyA.node?.position.x = 1000
+                contact.bodyA.node?.position.y = 1000
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                     self.breakablePlatform.position = pos
-                    contact.bodyB.node?.run(fadeIn)
+                    contact.bodyA.node?.run(fadeIn)
                 }
             }
         }
@@ -242,10 +422,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             onWater = false
             inAir = false
             let pos = breakablePlatform.position
-            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 3.0)
+            let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 2.0)
              let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.2)
             contact.bodyB.node?.run(fadeOut)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2){
                 contact.bodyB.node?.position.x = 1000
                 contact.bodyB.node?.position.y = 1000
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
@@ -421,6 +601,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             GameScene.powers += 1
             print("F")
             powers[0] = "Flame"
+            gs.update()
+        }
+        
+        //FIREPOWER MINI CONTACT EXPLORER
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "firepowerMini"{
+            contact.bodyB.node?.removeFromParent()
+            fireCharges += 1
+            print("M")
+            explorer.color = UIColor.orange
+            gs.update()
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "firepowerMini"{
+            contact.bodyA.node?.removeFromParent()
+            fireCharges += 1
+            print("M")
+            explorer.color = UIColor.orange
             gs.update()
         }
         
