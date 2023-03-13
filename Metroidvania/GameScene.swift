@@ -30,11 +30,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var shields = [SKSpriteNode]()
     var grassShields = [SKSpriteNode]()
     var phantoms = [SKSpriteNode]()
-    var peashooters = [SKSpriteNode]()
-    var peas = [SKSpriteNode]()
     
+    var peas = [SKSpriteNode]()
     var arrows = [SKSpriteNode]()
-    var arrowShooters = [SKSpriteNode]()
+    var stones = [SKSpriteNode]()
     
     let cam = SKCameraNode()
     var jumps = 0
@@ -110,11 +109,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         phantoms.append(self.childNode(withName: "fastPhantm1") as! SKSpriteNode)
         phantoms.append(self.childNode(withName: "superFastPhantm1") as! SKSpriteNode)
         
-        peashooters.append(self.childNode(withName: "pshooter1") as! SKSpriteNode)
+       
         peas.append(self.childNode(withName: "pea1") as! SKSpriteNode)
-        
-        arrowShooters.append(self.childNode(withName: "arrowShooterDown1") as! SKSpriteNode)
         arrows.append(self.childNode(withName: "arrowDown1") as! SKSpriteNode)
+        arrows.append(self.childNode(withName: "arrowUp1") as! SKSpriteNode)
+        arrows.append(self.childNode(withName: "arrowLeft1") as! SKSpriteNode)
+        arrows.append(self.childNode(withName: "arrowRight1") as! SKSpriteNode)
+        stones.append(self.childNode(withName: "stoneLeft1") as! SKSpriteNode)
+        stones.append(self.childNode(withName: "stoneRight1") as! SKSpriteNode)
         
         explorer.color = UIColor.cyan
         projectile.isHidden = true
@@ -124,22 +126,61 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         self.camera = cam
         
-//        for e in peashooters{
-//            peas[e].position = peashooters[e]
-//        }
+        for a in peas{
+            let pos = a.position
+            
+            let peaShoot1 =
+            SKAction.repeatForever(SKAction.sequence([SKAction.unhide(), SKAction.move(to: //expos, duration: 2), SKAction.hide(), SKAction.moveTo(x: pos.x, duration: 0.01), SKAction.moveTo(y: pos.y, duration: 0.01)]))
+            if a.name == "pea1"{
+                a.run(peaShoot1)
+            }
+        }
+        
+        //STONE MOVEMENT
+        for a in stones{
+            let stoneMoveLeft =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x - 800, duration: 2), SKAction.hide(), SKAction.moveTo(x: a.position.x + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            let stoneMoveRight =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x + 800, duration: 2), SKAction.hide(), SKAction.moveTo(x: a.position.x - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            if a.name == "stoneLeft1"{
+                a.run(stoneMoveLeft)
+            }
+            if a.name == "stoneRight1"{
+                a.run(stoneMoveRight)
+            }
+        }
+        //ARROW MOVEMENT
         for a in arrows{
             let arrowMoveDown =
-            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y - 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y + 400, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y - 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            let arrowMoveUp =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y + 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            let arrowMoveLeft =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x - 400, duration: 1), SKAction.hide(), SKAction.moveTo(x: a.position.x + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            let arrowMoveRight =
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x + 400, duration: 1), SKAction.hide(), SKAction.moveTo(x: a.position.x - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
             if a.name == "arrowDown1"{
                 a.run(arrowMoveDown)
             }
+            if a.name == "arrowUp1"{
+                a.run(arrowMoveUp)
+            }
+            if a.name == "arrowLeft1"{
+                a.run(arrowMoveLeft)
+            }
+            if a.name == "arrowRight1"{
+                a.run(arrowMoveRight)
+            }
         }
+        
+        //SPIKE MOVEMENT
         for p in pSpikes{
             let spikeMove =
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: p.position.y, duration: 1), SKAction.wait(forDuration: 2), SKAction.moveTo(y: p.position.y + 25, duration: 0.5), SKAction.wait(forDuration: 4)]))
             p.run(spikeMove)
         }
         
+        //PHANTOM MOVEMENT
         for e in phantoms{
             let phantmMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 200, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 200, duration: 3), SKAction.wait(forDuration: 3)]))
             let phantmMove2 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: e.position.y + 20, duration: 1), SKAction.moveTo(y: e.position.y - 20, duration: 1)]))
@@ -159,19 +200,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 e.run(phantmMove2)
         }
         
+        //GRASS SKELETON MOVEMENT
         for e in grassSkele{
             let gskellyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 50, duration: 4), SKAction.wait(forDuration: 2), SKAction.moveTo(x: e.position.x - 50, duration: 4), SKAction.wait(forDuration: 2)]))
             e.run(gskellyMove1)
         }
+        
+        //SKELETON MOVEMENT
         for e in skeletons{
             let skellyMove1 = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: e.position.x + 100, duration: 3), SKAction.wait(forDuration: 3), SKAction.moveTo(x: e.position.x - 100, duration: 3), SKAction.wait(forDuration: 3)]))
             e.run(skellyMove1)
         }
+        
+        //PLATFORM MOVEMENT
         let platformAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
         mover.run(platformAction)
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
+        var expos = explorer.position
+        
+        //SHIELDS SETUP
         shields[0].position.y = skeletons[1].position.y + 25
         shields[0].position.x = skeletons[1].position.x
         shields[1].position.y = skeletons[2].position.y + 25
@@ -333,6 +382,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             jumps = 1
             onWater = false
             inAir = false
+        }
+        //ARROWS CONTACT GROUND
+        for a in arrows{
+            if contact.bodyA.node?.name == "ground" && contact.bodyB.node?.name == a.name{
+                a.isHidden = true
+            }
+            if contact.bodyB.node?.name == "ground" && contact.bodyA.node?.name == a.name{
+                a.isHidden = true
+            }
         }
         //ARROWS CONTACT EXPLORER
         for a in arrows{
