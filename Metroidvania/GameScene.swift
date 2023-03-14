@@ -62,6 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var fireCharges = 0
     
+    var timer = Timer()
+    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -121,6 +123,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         explorer.color = UIColor.cyan
         projectile.isHidden = true
         ice.isHidden = true
+        
+        var expos = explorer.position
+        
         for g in ghosts{
             g.isHidden = true
         }
@@ -128,11 +133,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for a in peas{
             let pos = a.position
-            
-            let peaShoot1 =
-            SKAction.repeatForever(SKAction.sequence([SKAction.unhide(), SKAction.move(to: //expos, duration: 2), SKAction.hide(), SKAction.moveTo(x: pos.x, duration: 0.01), SKAction.moveTo(y: pos.y, duration: 0.01)]))
+            let peaMove = SKAction.move(to: expos, duration: 2)
+            let peaShoot1 = SKAction.sequence([SKAction.unhide(), peaMove, SKAction.hide(), SKAction.moveTo(x: pos.x, duration: 0.01), SKAction.moveTo(y: pos.y, duration: 0.01)])
             if a.name == "pea1"{
                 a.run(peaShoot1)
+                gs.update()
             }
         }
         
@@ -218,7 +223,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
-        var expos = explorer.position
         
         //SHIELDS SETUP
         shields[0].position.y = skeletons[1].position.y + 25
