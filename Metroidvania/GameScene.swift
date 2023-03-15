@@ -34,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var peas = [SKSpriteNode]()
     var arrows = [SKSpriteNode]()
     var stones = [SKSpriteNode]()
+    var checkpoints = [SKSpriteNode]()
+    var currentCheck = 0
     
     let cam = SKCameraNode()
     var jumps = 0
@@ -61,8 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var inAir = false
     
     var fireCharges = 0
-    
-    var timer = Timer()
+    var ammo = 10
     
     
     override func sceneDidLoad() {
@@ -120,6 +121,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         stones.append(self.childNode(withName: "stoneLeft1") as! SKSpriteNode)
         stones.append(self.childNode(withName: "stoneRight1") as! SKSpriteNode)
         
+        checkpoints.append(self.childNode(withName: "checkpoint1") as! SKSpriteNode)
+        checkpoints.append(self.childNode(withName: "checkpoint2") as! SKSpriteNode)
+        
         explorer.color = UIColor.cyan
         projectile.isHidden = true
         ice.isHidden = true
@@ -133,11 +137,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for a in peas{
             let pos = a.position
-            let peaMove = SKAction.move(to: expos, duration: 2)
-            let peaShoot1 = SKAction.sequence([SKAction.unhide(), peaMove, SKAction.hide(), SKAction.moveTo(x: pos.x, duration: 0.01), SKAction.moveTo(y: pos.y, duration: 0.01)])
+            var peaShoot1 = SKAction.sequence([SKAction.unhide(), SKAction.move(to: expos, duration: 2), SKAction.hide(), SKAction.moveTo(x: pos.x, duration: 0.01), SKAction.moveTo(y: pos.y, duration: 0.01)])
             if a.name == "pea1"{
                 a.run(peaShoot1)
-                gs.update()
             }
         }
         
@@ -223,7 +225,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
-        
+        for a in peas{
+            if a.name == "pea1"{
+                a.run(peaShoot1)
+            }
+        }
+        if GameScene.lives == 0{
+            for checkpoint in checkpoints {
+                if checkpoint.color == UIColor.cyan{
+                    explorer.position.x = checkpoint.position.x
+                    explorer.position.y = checkpoint.position.y + 25
+                }
+            }
+        }
         //SHIELDS SETUP
         shields[0].position.y = skeletons[1].position.y + 25
         shields[0].position.x = skeletons[1].position.x
@@ -233,7 +247,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shields[2].position.x = skeletons[2].position.x + 25
         grassShields[0].position.x = grassSkele[0].position.x
         grassShields[0].position.y = grassSkele[0].position.y + 25
-        
+        for checkpoint in checkpoints {
+            checkpoint.color = UIColor.white
+        }
+        checkpoints[currentCheck].color = UIColor.cyan
     }
     func didBegin(_ contact: SKPhysicsContact) {
         
@@ -285,6 +302,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
+        //CHECKPOINT CONTACT EXPLORER
+        for c in checkpoints{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == c.name{
+                currentCheck = checkpoints.firstIndex(of: c)!
+                print(currentCheck)
+                checkpoints[currentCheck].color = UIColor.cyan
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == c.name{
+                currentCheck = checkpoints.firstIndex(of: c)!
+                print(currentCheck)
+                checkpoints[currentCheck].color = UIColor.cyan
+            }
+            gs.update()
+        }
+                
         //GRASS SKELETONS CONTACT EXPLORER
         for e in grassSkele{
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == e.name{

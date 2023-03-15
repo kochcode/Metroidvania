@@ -117,6 +117,14 @@ class GameViewController: UIViewController {
             heart1.isHidden = true
             heart2.isHidden = true
             heart3.isHidden = true
+            play.explorer.isHidden = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                self.heart1.isHidden = false
+                self.heart2.isHidden = false
+                self.heart3.isHidden = false
+                self.play.explorer.isHidden = false
+                GameScene.lives = 3
+            }
         }
         if GameScene.powers < 1{
             powerOutlet.isHidden = true
