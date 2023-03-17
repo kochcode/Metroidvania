@@ -11,14 +11,14 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var explorer : SKSpriteNode!
-    var plank : SKSpriteNode!
-    var platform : SKSpriteNode!
+    var planks = [SKSpriteNode]()
+    var platforms = [SKSpriteNode]()
     
     var breakablePlatform : SKSpriteNode!
     var spikePlatform : SKSpriteNode!
     var pSpikes = [SKSpriteNode]()
     
-    var ladder : SKSpriteNode!
+    var ladders = [SKSpriteNode]()
     var mover : SKSpriteNode!
     var projectile : SKSpriteNode!
     var water : SKSpriteNode!
@@ -65,6 +65,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var fireCharges = 0
     var ammo = 10
     
+    var doorRight : SKSpriteNode!
+    var doorLeft : SKSpriteNode!
+    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -74,8 +77,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
         explorer = (self.childNode(withName: "explorer") as! SKSpriteNode)
-        plank = (self.childNode(withName: "plank") as! SKSpriteNode)
-        platform = (self.childNode(withName: "platform") as! SKSpriteNode)
+        planks.append(self.childNode(withName: "plank1") as! SKSpriteNode)
+        planks.append(self.childNode(withName: "plank2") as! SKSpriteNode)
+        planks.append(self.childNode(withName: "plank3") as! SKSpriteNode)
+        planks.append(self.childNode(withName: "plank4") as! SKSpriteNode)
+        planks.append(self.childNode(withName: "plank5") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform1") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform2") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform3") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform4") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform5") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform6") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform7") as! SKSpriteNode)
         
         breakablePlatform = (self.childNode(withName: "breakable") as! SKSpriteNode)
         spikePlatform = (self.childNode(withName: "spikePlatform") as! SKSpriteNode)
@@ -87,7 +100,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pSpikes.append(self.childNode(withName: "pSpike6") as! SKSpriteNode)
         pSpikes.append(self.childNode(withName: "pSpike7") as! SKSpriteNode)
         
-        ladder = (self.childNode(withName: "ladder") as! SKSpriteNode)
+        ladders.append(self.childNode(withName: "ladder1") as! SKSpriteNode)
+        ladders.append(self.childNode(withName: "ladder2") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
         water = (self.childNode(withName: "water") as! SKSpriteNode)
@@ -123,6 +137,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         checkpoints.append(self.childNode(withName: "checkpoint1") as! SKSpriteNode)
         checkpoints.append(self.childNode(withName: "checkpoint2") as! SKSpriteNode)
+        
+        doorLeft = (self.childNode(withName: "doorLeft") as! SKSpriteNode)
+        doorRight = (self.childNode(withName: "doorRight") as! SKSpriteNode)
         
         explorer.color = UIColor.cyan
         projectile.isHidden = true
@@ -219,17 +236,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             e.run(skellyMove1)
         }
         
-        //PLATFORM MOVEMENT
-        let platformAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
-        mover.run(platformAction)
+        //MOVER MOVEMENT
+        let moverAction = SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: mover.position.x + 200, duration: 2), SKAction.moveTo(x: mover.position.x - 200, duration: 2)]))
+        mover.run(moverAction)
     }
     override func update(_ currentTime: TimeInterval) {
         cam.position = explorer.position
-        for a in peas{
-            if a.name == "pea1"{
-                a.run(peaShoot1)
-            }
-        }
+//        for a in peas{
+//            if a.name == "pea1"{
+//                a.run(peaShoot1)
+//            }
+//        }
         if GameScene.lives == 0{
             for checkpoint in checkpoints {
                 if checkpoint.color == UIColor.cyan{
@@ -308,11 +325,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 currentCheck = checkpoints.firstIndex(of: c)!
                 print(currentCheck)
                 checkpoints[currentCheck].color = UIColor.cyan
+                jumps = 1
+                onWater = false
             }
             if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == c.name{
                 currentCheck = checkpoints.firstIndex(of: c)!
                 print(currentCheck)
                 checkpoints[currentCheck].color = UIColor.cyan
+                jumps = 1
+                onWater = false
             }
             gs.update()
         }
@@ -572,13 +593,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //PLANK CONTACT EXPLORER
-        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "plank"{
-            jumps = 1
-            onWater = false
-        }
-        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "plank"{
-            jumps = 1
-            onWater = false
+        for p in planks{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == p.name{
+                jumps = 1
+                onWater = false
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == p.name{
+                jumps = 1
+                onWater = false
+            }
         }
         
         //MOVER CONTACT EXPLORER
@@ -593,15 +616,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //PLATFORM CONTACT EXPLORER
-        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "platform"{
-            climb = 2
-            jumps = 1
-            onWater = false
-        }
-        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "platform"{
-            climb = 2
-            jumps = 1
-            onWater = false
+        for p in platforms{
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == p.name{
+                climb = 2
+                jumps = 1
+                onWater = false
+            }
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == p.name{
+                climb = 2
+                jumps = 1
+                onWater = false
+            }
         }
         
         //LADDER CONTACT EXPLORER
@@ -612,6 +637,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ladder"{
             climb2 = true
             onWater = false
+        }
+        
+        //DOORS CONTACT EXPLORER
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "doorLeft"{
+            explorer.position.x = doorRight.position.x + 75
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "doorLeft"{
+            explorer.position.x = doorRight.position.x + 75
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "doorRight"{
+            explorer.position.x = doorLeft.position.x - 75
+        }
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "doorRight"{
+            explorer.position.x = doorLeft.position.x - 75
         }
         
         //KEY CONTACT EXPLORER
@@ -631,12 +670,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if key1 == true{
                 contact.bodyB.node?.removeFromParent()
                 print("lock")
+                key1 = false
             }
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "lock"{
             if key1 == true{
                 contact.bodyA.node?.removeFromParent()
                 print("lock")
+                key1 = false
             }
         }
         
@@ -896,7 +937,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //LEFT
     func mLeft(){
         if inAir == false{
-            explorer.physicsBody?.velocity = CGVector(dx: -450, dy: 0)
+            explorer.physicsBody?.velocity = CGVector(dx: -350, dy: 0)
             left = true
             moving = "left"
         }
@@ -909,7 +950,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //RIGHT
     func mRight(){
         if inAir == false{
-            explorer.physicsBody?.velocity = CGVector(dx: 450, dy: 0)
+            explorer.physicsBody?.velocity = CGVector(dx: 350, dy: 0)
             left = false
             moving = "right"
         }
@@ -922,38 +963,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //DOWN
     func mDown(){
         down = true
-        plank.physicsBody?.categoryBitMask = 0
+        for p in planks{
+            p.physicsBody?.categoryBitMask = 0
+        }
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: -75)
     }
     func stopDown(){
         down = false
-        plank.physicsBody?.categoryBitMask = 1
+        for p in planks{
+            p.physicsBody?.categoryBitMask = 1
+        }
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
     }
     
     //UP
     func mUp(){
         up = true
-        if explorer.position.y < platform.position.y{
-            if climb > 1{
-                platform.physicsBody?.categoryBitMask = 0
-                explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 1))
+        for p in platforms{
+            if explorer.position.y < p.position.y{
+                if climb > 1{
+                    p.physicsBody?.categoryBitMask = 0
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 1))
+                }
+                climb = 1
             }
-            climb = 1
-        }
-        if explorer.position.y < ladder.position.y && (explorer.position.x > ladder.position.x - 40 && explorer.position.x < ladder.position.x + 55){
-            print("ok")
-            if climb2 == true{
-                ladder.physicsBody?.categoryBitMask = 0
-                explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 80))
+            for l in ladders{
+                if explorer.position.y < l.position.y && (explorer.position.x > l.position.x - 40 && explorer.position.x < l.position.x + 55){
+                    print("ok")
+                    if climb2 == true{
+                        l.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 80))
+                    }
+                }
             }
         }
-        
     }
     func stopUp(){
         up = false
-        platform.physicsBody?.categoryBitMask = 1
-        ladder.physicsBody?.categoryBitMask = 1
+        for p in platforms{
+            p.physicsBody?.categoryBitMask = 1
+        }
+        for l in ladders{
+            l.physicsBody?.categoryBitMask = 1
+        }
         
         
     }
