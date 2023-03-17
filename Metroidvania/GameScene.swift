@@ -44,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var down = false
     var up = false
     
-    var key1 = false
+    var keys = 0
     static var lives = 3
     static var powers = 0
     
@@ -656,28 +656,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //KEY CONTACT EXPLORER
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "key"{
             contact.bodyB.node?.removeFromParent()
-            key1 = true
+            keys += 1
             print("key")
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "key"{
             contact.bodyA.node?.removeFromParent()
-            key1 = true
+            keys += 1
             print("key")
         }
         
         //LOCK CONTACT EXPLORER
         if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "lock"{
-            if key1 == true{
+            if keys > 0{
                 contact.bodyB.node?.removeFromParent()
                 print("lock")
-                key1 = false
+                keys -= 1
             }
         }
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "lock"{
-            if key1 == true{
+            if keys > 0{
                 contact.bodyA.node?.removeFromParent()
                 print("lock")
-                key1 = false
+                keys -= 1
             }
         }
         
@@ -988,9 +988,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 climb = 1
             }
             for l in ladders{
-                if explorer.position.y < l.position.y && (explorer.position.x > l.position.x - 40 && explorer.position.x < l.position.x + 55){
-                    print("ok")
+                if explorer.position.y < l.position.y{
                     if climb2 == true{
+                        l.physicsBody?.categoryBitMask = 0
                         l.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 80))
                     }
                 }
