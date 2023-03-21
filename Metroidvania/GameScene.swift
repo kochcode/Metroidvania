@@ -196,6 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         arrows.append(self.childNode(withName: "arrowRight1") as! SKSpriteNode)
         arrows.append(self.childNode(withName: "arrowRight2") as! SKSpriteNode)
         stones.append(self.childNode(withName: "stoneLeft1") as! SKSpriteNode)
+        stones.append(self.childNode(withName: "stoneLeft2") as! SKSpriteNode)
         stones.append(self.childNode(withName: "stoneRight1") as! SKSpriteNode)
         
         checkpoints.append(self.childNode(withName: "checkpoint1") as! SKSpriteNode)
@@ -203,6 +204,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         checkpoints.append(self.childNode(withName: "checkpoint3") as! SKSpriteNode)
         checkpoints.append(self.childNode(withName: "checkpoint4") as! SKSpriteNode)
         checkpoints.append(self.childNode(withName: "checkpoint5") as! SKSpriteNode)
+        checkpoints.append(self.childNode(withName: "checkpoint6") as! SKSpriteNode)
+        checkpoints.append(self.childNode(withName: "checkpoint7") as! SKSpriteNode)
         
         doorLeft = (self.childNode(withName: "doorLeft") as! SKSpriteNode)
         doorRight = (self.childNode(withName: "doorRight") as! SKSpriteNode)
@@ -232,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x - 800, duration: 2), SKAction.hide(), SKAction.moveTo(x: a.position.x + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
             let stoneMoveRight =
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x + 800, duration: 2), SKAction.hide(), SKAction.moveTo(x: a.position.x - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
-            if a.name == "stoneLeft1"{
+            if a.name == "stoneLeft1" || a.name == "stoneLeft2"{
                 a.run(stoneMoveLeft)
             }
             if a.name == "stoneRight1"{
@@ -396,20 +399,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //CHECKPOINT CONTACT EXPLORER
         for c in checkpoints{
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == c.name{
-                if explorer.position.y < c.position.y{
                     currentCheck = checkpoints.firstIndex(of: c)!
                     print(currentCheck)
                     checkpoints[currentCheck].color = UIColor.cyan
-                }
                 jumps = 1
                 onWater = false
             }
             if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == c.name{
-                if explorer.position.y < c.position.y{
                     currentCheck = checkpoints.firstIndex(of: c)!
                     print(currentCheck)
                     checkpoints[currentCheck].color = UIColor.cyan
-                }
                 jumps = 1
                 onWater = false
             }
