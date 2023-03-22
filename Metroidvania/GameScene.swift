@@ -69,6 +69,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var doorLeft : SKSpriteNode!
     var door = "None"
     
+    var whichPlatform = ""
+    
+    
+    
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -742,11 +746,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //PLATFORM CONTACT EXPLORER
         for p in platforms{
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == p.name{
+                whichPlatform = p.name!
                 climb = 2
                 jumps = 1
                 onWater = false
             }
             if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == p.name{
+                whichPlatform = p.name!
                 climb = 2
                 jumps = 1
                 onWater = false
@@ -1106,23 +1112,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func mUp(){
         up = true
         for p in platforms{
-            if explorer.position.y < p.position.y{
-                if climb > 1{
                     p.physicsBody?.categoryBitMask = 0
-                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 1))
-                }
                 climb = 1
             }
             for l in ladders{
                 if explorer.position.y < l.position.y{
                     if climb2 == true{
                         l.physicsBody?.categoryBitMask = 0
-                        explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 3))
                     }
                 }
             }
         }
-    }
     func stopUp(){
         up = false
         for p in platforms{
