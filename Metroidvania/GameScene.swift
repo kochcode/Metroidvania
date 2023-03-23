@@ -15,6 +15,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var platforms = [SKSpriteNode]()
     
     var breakablePlatform : SKSpriteNode!
+    var arrowShooter: SKSpriteNode!
     var spikePlatform : SKSpriteNode!
     var pSpikes = [SKSpriteNode]()
     
@@ -104,8 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         planks.append(self.childNode(withName: "plank20") as! SKSpriteNode)
         planks.append(self.childNode(withName: "plank21") as! SKSpriteNode)
         planks.append(self.childNode(withName: "plank22") as! SKSpriteNode)
-        planks.append(self.childNode(withName: "plank23") as! SKSpriteNode)
-        planks.append(self.childNode(withName: "plank24") as! SKSpriteNode)
         platforms.append(self.childNode(withName: "platform1") as! SKSpriteNode)
         platforms.append(self.childNode(withName: "platform2") as! SKSpriteNode)
         platforms.append(self.childNode(withName: "platform3") as! SKSpriteNode)
@@ -125,6 +124,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         platforms.append(self.childNode(withName: "platform17") as! SKSpriteNode)
         platforms.append(self.childNode(withName: "platform18") as! SKSpriteNode)
         platforms.append(self.childNode(withName: "platform19") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform20") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform21") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform22") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform23") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform24") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform25") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform26") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform27") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform28") as! SKSpriteNode)
+        platforms.append(self.childNode(withName: "platform29") as! SKSpriteNode)
         
         breakablePlatform = (self.childNode(withName: "breakable") as! SKSpriteNode)
         spikePlatform = (self.childNode(withName: "spikePlatform") as! SKSpriteNode)
@@ -149,16 +158,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pSpikes.append(self.childNode(withName: "pSpike19") as! SKSpriteNode)
         pSpikes.append(self.childNode(withName: "pSpike20") as! SKSpriteNode)
         pSpikes.append(self.childNode(withName: "pSpike21") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike22") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike23") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike24") as! SKSpriteNode)
+        pSpikes.append(self.childNode(withName: "pSpike25") as! SKSpriteNode)
         
         ladders.append(self.childNode(withName: "ladder1") as! SKSpriteNode)
         ladders.append(self.childNode(withName: "ladder2") as! SKSpriteNode)
         ladders.append(self.childNode(withName: "ladder3") as! SKSpriteNode)
         ladders.append(self.childNode(withName: "ladder4") as! SKSpriteNode)
         ladders.append(self.childNode(withName: "ladder5") as! SKSpriteNode)
+        ladders.append(self.childNode(withName: "ladder6") as! SKSpriteNode)
+        ladders.append(self.childNode(withName: "ladder7") as! SKSpriteNode)
         mover = (self.childNode(withName: "mover") as! SKSpriteNode)
         projectile = (self.childNode(withName: "projectile") as! SKSpriteNode)
         water = (self.childNode(withName: "water") as! SKSpriteNode)
         ice = (self.childNode(withName: "ice") as! SKSpriteNode)
+        arrowShooter = (self.childNode(withName: "arrowShooter") as! SKSpriteNode)
         
         ghosts.append(self.childNode(withName: "ghost") as! SKSpriteNode)
         ghosts.append(self.childNode(withName: "ghost2") as! SKSpriteNode)
@@ -191,7 +207,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
        
         peas.append(self.childNode(withName: "pea1") as! SKSpriteNode)
-        arrows.append(self.childNode(withName: "arrowDown1") as! SKSpriteNode)
+        arrows.append(self.childNode(withName: "arrowDown5") as! SKSpriteNode)
         arrows.append(self.childNode(withName: "arrowDown2") as! SKSpriteNode)
         arrows.append(self.childNode(withName: "arrowDown3") as! SKSpriteNode)
         arrows.append(self.childNode(withName: "arrowDown4") as! SKSpriteNode)
@@ -249,14 +265,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //ARROW MOVEMENT
         for a in arrows{
             let arrowMoveDown =
-            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y - 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
+            SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y - 600, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
             let arrowMoveUp =
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(y: a.position.y + 400, duration: 1), SKAction.hide(), SKAction.moveTo(y: a.position.y - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
             let arrowMoveLeft =
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x - 400, duration: 1), SKAction.hide(), SKAction.moveTo(x: a.position.x + 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
             let arrowMoveRight =
             SKAction.repeatForever(SKAction.sequence([SKAction.moveTo(x: a.position.x + 400, duration: 1), SKAction.hide(), SKAction.moveTo(x: a.position.x - 0, duration: 0.01), SKAction.unhide(), SKAction.wait(forDuration: 2)]))
-            if a.name == "arrowDown1" || a.name == "arrowDown2" || a.name == "arrowDown3" || a.name == "arrowDown4"{
+            if a.name == "arrowDown5" || a.name == "arrowDown2" || a.name == "arrowDown3" || a.name == "arrowDown4"{
                 a.run(arrowMoveDown)
             }
             if a.name == "arrowUp1"{
@@ -676,6 +692,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        //SHIELD CONTACT EXPLORER
+        for s in shields{
+            if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == s.name{
+                jumps = 1
+                onWater = false
+                inAir = false
+                door = "none"
+            }
+            if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == s.name{
+                jumps = 1
+                onWater = false
+                inAir = false
+                door = "none"
+            }
+        }
+        //ARROW SHOOTER CONTACT EXPLORER
+        if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "arrowShooter"{
+            jumps = 1
+            onWater = false
+            inAir = false
+            door = "none"
+        }
+        if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == "arrowShooter"{
+            jumps = 1
+            onWater = false
+            inAir = false
+            door = "none"
+        }
+        
         //GROUND CONTACT EXPLORER
         if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == "ground"{
             jumps = 1
@@ -764,10 +809,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if contact.bodyA.node?.name == "explorer" && contact.bodyB.node?.name == l.name{
                 climb2 = true
                 onWater = false
+                if up == true{
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
+                }
             }
             if contact.bodyB.node?.name == "explorer" && contact.bodyA.node?.name == l.name{
                 climb2 = true
                 onWater = false
+                if up == true{
+                    explorer.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
+                }
             }
         }
         
@@ -1105,6 +1156,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for p in planks{
             p.physicsBody?.categoryBitMask = 1
         }
+        for p in platforms{
+            p.physicsBody?.categoryBitMask = 1
+            }
         explorer.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
     }
     
