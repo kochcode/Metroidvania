@@ -19,22 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="852" height="393"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fz-G7-HbQ">
-                                <rect key="frame" x="87" y="290" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" name="AccentColor"/>
-                                <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
-                                    <imageReference key="image" image="arrowshape.left.fill" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large"/>
-                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="leftMoveHeld:" destination="BV1-FR-VrT" eventType="touchDown" id="VzZ-tW-uPM"/>
-                                    <action selector="leftMoveLetGo:" destination="BV1-FR-VrT" eventType="touchUpInside" id="fbr-aj-mru"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="545-v6-IM3">
-                                <rect key="frame" x="202" y="290" width="50" height="50"/>
+                                <rect key="frame" x="202" y="280" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" name="AccentColor"/>
                                 <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
@@ -49,7 +35,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAh-4g-hYq">
-                                <rect key="frame" x="144" y="336" width="50" height="50"/>
+                                <rect key="frame" x="139" y="331" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" name="AccentColor"/>
                                 <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
@@ -76,7 +62,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3GA-Dn-aMv">
-                                <rect key="frame" x="144" y="248" width="50" height="50"/>
+                                <rect key="frame" x="139" y="231" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" name="AccentColor"/>
                                 <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
@@ -137,6 +123,20 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="shootButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="UWB-jh-8WA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fz-G7-HbQ">
+                                <rect key="frame" x="76" y="280" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <buttonConfiguration key="configuration" style="tinted" imagePadding="0.0" cornerStyle="capsule">
+                                    <imageReference key="image" image="arrowshape.left.fill" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large"/>
+                                    <color key="baseForegroundColor" systemColor="systemRedColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="leftMoveHeld:" destination="BV1-FR-VrT" eventType="touchDown" id="VzZ-tW-uPM"/>
+                                    <action selector="leftMoveLetGo:" destination="BV1-FR-VrT" eventType="touchUpInside" id="fbr-aj-mru"/>
                                 </connections>
                             </button>
                         </subviews>
