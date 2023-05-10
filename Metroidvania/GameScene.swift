@@ -407,6 +407,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         stones.append(self.childNode(withName: "stoneLeft1") as! SKSpriteNode)
         stones.append(self.childNode(withName: "stoneLeft2") as! SKSpriteNode)
         stones.append(self.childNode(withName: "stoneRight5") as! SKSpriteNode)
+        stones.append(self.childNode(withName: "stoneRight6") as! SKSpriteNode)
         
         checkpoints.append(self.childNode(withName: "checkpoint1") as! SKSpriteNode)
         checkpoints.append(self.childNode(withName: "checkpoint2") as! SKSpriteNode)
@@ -463,7 +464,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if a.name == "stoneLeft1" || a.name == "stoneLeft2"{
                 a.run(stoneMoveLeft)
             }
-            if a.name == "stoneRight5"{
+            if a.name == "stoneRight5" || a.name == "stoneLeft6"{
                 a.run(stoneMoveRight)
             }
         }
